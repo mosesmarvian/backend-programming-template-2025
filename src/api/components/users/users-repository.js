@@ -12,8 +12,8 @@ async function getUserByEmail(email) {
   return Users.findOne({ email });
 }
 
-async function createUser(email, password, fullName) {
-  return Users.create({ email, password, fullName });
+async function createUser(email, password, fullName, gachaTimes) {
+  return Users.create({ email, password, fullName, gachaTimes });
 }
 
 async function updateUser(id, email, fullName) {
@@ -22,6 +22,10 @@ async function updateUser(id, email, fullName) {
 
 async function changePassword(id, password) {
   return Users.updateOne({ _id: id }, { $set: { password } });
+}
+
+async function gacha(id, gachaTimes) {
+  return Users.updateOne({ _id: id }, { $set: { gachaTimes } });
 }
 
 async function deleteUser(id) {
@@ -35,5 +39,6 @@ module.exports = {
   createUser,
   updateUser,
   changePassword,
+  gacha,
   deleteUser,
 };

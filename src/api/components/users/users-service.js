@@ -13,8 +13,8 @@ async function emailExists(email) {
   return !!user; // Return true if user exists, false otherwise
 }
 
-async function createUser(email, password, fullName) {
-  return usersRepository.createUser(email, password, fullName);
+async function createUser(email, password, fullName, gachaTimes) {
+  return usersRepository.createUser(email, password, fullName, gachaTimes);
 }
 
 async function updateUser(id, email, fullName) {
@@ -23,6 +23,10 @@ async function updateUser(id, email, fullName) {
 
 async function changePassword(id, password) {
   return usersRepository.changePassword(id, password);
+}
+
+async function gacha(id, gachaTimes) {
+  return usersRepository.gacha(id, gachaTimes);
 }
 
 async function deleteUser(id) {
@@ -36,5 +40,6 @@ module.exports = {
   createUser,
   updateUser,
   changePassword,
+  gacha,
   deleteUser,
 };
