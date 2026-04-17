@@ -1,4 +1,5 @@
 const usersRepository = require('./users-repository');
+const gachaRepository = require('../gacha/gacha-repository');
 
 async function getUsers() {
   return usersRepository.getUsers();
@@ -13,8 +14,13 @@ async function emailExists(email) {
   return !!user; // Return true if user exists, false otherwise
 }
 
-async function createUser(email, password, fullName, gachaTimes) {
-  return usersRepository.createUser(email, password, fullName, gachaTimes);
+async function createUser(email, password, fullName) {
+  const newUser = await usersRepository.createUser(email, password, fullName);
+
+  if (newUser) {
+    await gachaRepository.createUserGacha(newUser.id, newUser.fullName);
+  }
+  return newUser;
 }
 
 async function updateUser(id, email, fullName) {
@@ -23,10 +29,6 @@ async function updateUser(id, email, fullName) {
 
 async function changePassword(id, password) {
   return usersRepository.changePassword(id, password);
-}
-
-async function gacha(id, gachaTimes) {
-  return usersRepository.gacha(id, gachaTimes);
 }
 
 async function deleteUser(id) {
@@ -40,6 +42,5 @@ module.exports = {
   createUser,
   updateUser,
   changePassword,
-  gacha,
   deleteUser,
 };

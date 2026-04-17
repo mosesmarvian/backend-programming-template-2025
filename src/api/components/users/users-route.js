@@ -22,9 +22,6 @@ module.exports = (app) => {
   // Change password
   route.put('/:id/change-password', usersController.changePassword);
 
-  // Gacha
-  route.put('/:id/user-gacha', usersController.gacha);
-
   // Delete user
   route.delete('/:id', usersController.deleteUser);
 };

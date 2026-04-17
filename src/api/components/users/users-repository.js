@@ -24,10 +24,6 @@ async function changePassword(id, password) {
   return Users.updateOne({ _id: id }, { $set: { password } });
 }
 
-async function gacha(id, gachaTimes) {
-  return Users.updateOne({ _id: id }, { $set: { gachaTimes } });
-}
-
 async function deleteUser(id) {
   return Users.deleteOne({ _id: id });
 }
@@ -39,6 +35,5 @@ module.exports = {
   createUser,
   updateUser,
   changePassword,
-  gacha,
   deleteUser,
 };

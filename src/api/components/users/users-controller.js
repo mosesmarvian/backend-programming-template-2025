@@ -75,15 +75,11 @@ async function createUser(request, response, next) {
     // Hash the password before saving it to the database
     const hashedPassword = await hashPassword(password);
 
-    // Gacha times
-    const gachaTimes = 0;
-
     // Create the user
     const success = await usersService.createUser(
       email,
       hashedPassword,
-      fullName,
-      gachaTimes
+      fullName
     );
 
     if (!success) {
@@ -217,38 +213,6 @@ async function changePassword(request, response, next) {
   }
 }
 
-async function gacha(request, response, next) {
-  try {
-    const user = await usersService.getUser(request.params.id);
-
-    if (!user) {
-      throw errorResponder(errorTypes.UNPROCESSABLE_ENTITY, 'User not found');
-    }
-
-    if (user.gachaTimes >= 5) {
-      throw errorResponder(
-        errorTypes.VALIDATION_ERROR,
-        'You have gacha more than 5 times today.'
-      );
-    }
-
-    const success = await usersService.gacha(
-      request.params.id,
-      user.gachaTimes + 1
-    );
-
-    if (!success) {
-      throw errorResponder(
-        errorTypes.UNPROCESSABLE_ENTITY,
-        'Failed to update gacha'
-      );
-    }
-    return response.status(200).json({ message: 'Gacha updated successfully' });
-  } catch (error) {
-    return next(error);
-  }
-}
-
 async function deleteUser(request, response, next) {
   try {
     const success = await usersService.deleteUser(request.params.id);
@@ -272,6 +236,5 @@ module.exports = {
   createUser,
   updateUser,
   changePassword,
-  gacha,
   deleteUser,
 };

@@ -19,6 +19,27 @@ db.once('open', () => {
 const dbExports = {};
 dbExports.db = db;
 
+db.once('open', async () => {
+  try {
+    const PrizeModel = dbExports.Prizes;
+
+    const count = await PrizeModel.countDocuments();
+
+    if (count === 0) {
+      const defaultPrizes = [
+        { name: 'Emas 10 gram', quota: 1, available: 1 },
+        { name: 'Smartphone X', quota: 5, available: 5 },
+        { name: 'Smartwatch Y', quota: 10, available: 10 },
+        { name: 'Voucher Rp100.000', quota: 100, available: 100 },
+        { name: 'Pulsa Rp50.000', quota: 500, available: 500 },
+      ];
+      await PrizeModel.insertMany(defaultPrizes);
+    }
+  } catch (error) {
+    logger.error('Error initializing prizes:', error);
+  }
+});
+
 const basename = path.basename(__filename);
 
 fs.readdirSync(__dirname)
