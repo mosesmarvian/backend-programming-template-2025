@@ -1,11 +1,11 @@
 const { Winners } = require('../../../models');
 
-async function addWinnerToPrize(prizeId, prizeName, userName, takenDate) {
+async function addWinnerToPrize(prizeId, prizeName, userName) {
   return Winners.updateOne(
     { prizeID: prizeId },
     {
       $set: { prizeName },
-      $push: { prizeWinners: userName, takenDate },
+      $push: { prizeWinners: userName },
     },
     { upsert: true }
   );

@@ -10,7 +10,7 @@ async function doGacha(id, gachaAmount, lastGachaDate, historyEntry) {
   return gachaRepository.doGacha(id, gachaAmount, lastGachaDate, historyEntry);
 }
 
-async function pickAndClaimPrize(userName, takenDate) {
+async function pickAndClaimPrize(userName) {
   const availablePrizes = await gachaRepository.getRandomAvailablePrize();
 
   if (availablePrizes.length === 0) {
@@ -25,8 +25,7 @@ async function pickAndClaimPrize(userName, takenDate) {
   await winnersRepository.addWinnerToPrize(
     selectedPrize.id,
     selectedPrize.name,
-    maskedUserName,
-    takenDate
+    maskedUserName
   );
 
   return selectedPrize;
